@@ -1,6 +1,11 @@
 apiVersion: automation.cloudbees.io/v1alpha1
 kind: workflow
 name: My workflow
+
+env:
+  APP_NAME: swen-java-app
+  UNIQUE_PREFIX: swen
+
 on:
   push:
     branches:
@@ -37,6 +42,4 @@ jobs:
           destination: ${{ steps.aws-login.outputs.aws-account-id
             }}.dkr.ecr.us-east-1.amazonaws.com/${{ env.APP_NAME }}-image:${{
             env.UNIQUE_PREFIX }}-${{ cloudbees.version }}
-env:
-  APP_NAME: swen-java-app
-  UNIQUE_PREFIX: swen
+
