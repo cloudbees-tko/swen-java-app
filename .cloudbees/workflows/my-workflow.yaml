@@ -19,6 +19,7 @@ jobs:
           mvn clean install
       - uses: cloudbees-io/configure-aws-credentials@v1
         name: aws-login
+        id: aws-login
         with:
           aws-access-key-id: ${{ vars.aws_access_key_id}}
           aws-secret-access-key: ${{secrets.aws_secret_access_key}}
