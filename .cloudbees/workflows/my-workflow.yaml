@@ -77,11 +77,11 @@ jobs:
           aws-region: us-east-1
           role-to-assume: cloudbees-infra-mgmt
           role-duration-seconds: "3600"
+      - uses: cloudbees-io/configure-eks-credentials@v1
+        name: cloudbees-quickstart-cluster
       - uses: cloudbees-io/configure-ecr-credentials@v1
         name: auth for ECR
         id: login-ecr
-      - uses: cloudbees-io/configure-eks-credentials@v1
-        name: cloudbees-quickstart-cluster
       - uses: cloudbees-io/helm-install@v1
         name: Helm Install
         kind: deploy
