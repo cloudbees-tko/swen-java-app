@@ -55,13 +55,17 @@ jobs:
             image:
               repository: ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/${{ env.APP_NAME }}-image
               tag: ${{ steps.image-publish.outputs.tag }}
-      - name: Publish Helm chart
+      - uses: cloudbees-io/helm-push@v1
+        name: Publish Helm chart
         id: helm-publish
-        uses: cloudbees-io/helm-push@v1
         with:
           chart: ${{ steps.helmpkg.outputs.chart }}
           remote: oci://${{ steps.aws-login.outputs.aws-account-id
             }}.dkr.ecr.us-east-1.amazonaws.com
+    outputs:
+      Helm_chart: ${{ steps.helmpkg.outputs.chart }}
+      oci_url: oci://${{ steps.aws-login.outputs.aws-account-id
+        }}.dkr.ecr.us-east-1.amazonaws.com
   Deploy:
     steps:
       - uses: cloudbees-io/configure-aws-credentials@v1
@@ -73,5 +77,12 @@ jobs:
           aws-region: us-east-1
           role-to-assume: cloudbees-infra-mgmt
           role-duration-seconds: "3600"
+      - uses: cloudbees-io/configure-eks-credentials@v1
+        name: configure eks credential
+      - uses: cloudbees-io/helm-install@v1
+        name: Helm Install
+        with:
+          release-name: ${{ jobs.build.outputs.Helm_chart }}
+          chart-location: ${{ jobs.build.outputs.oci_url }}
     needs:
       - build
