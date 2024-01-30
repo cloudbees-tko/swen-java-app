@@ -69,8 +69,6 @@ jobs:
   deploy:
     steps:
       - uses: cloudbees-io/configure-aws-credentials@v1
-        name: aws login
-        id: aws-login
         with:
           aws-access-key-id: ${{ vars.aws_access_key_id }}
           aws-secret-access-key: ${{ secrets.aws_secret_access_key }}
@@ -78,7 +76,8 @@ jobs:
           role-to-assume: cloudbees-infra-mgmt
           role-duration-seconds: "3600"
       - uses: cloudbees-io/configure-eks-credentials@v1
-        name: cloudbees-quickstart-cluster
+        with:
+          name: cloudbees-quickstart-cluster
       - uses: cloudbees-io/configure-ecr-credentials@v1
         name: login ecr
         id: login-ecr
