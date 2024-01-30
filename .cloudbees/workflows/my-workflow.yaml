@@ -84,7 +84,21 @@ jobs:
       - uses: cloudbees-io/helm-install@v1
         name: Helm Install
         with:
-          release-name: ${{ jobs.build.outputs.Helm_chart }}
-          chart-location: ${{ jobs.build.outputs.oci_url }}
+          chart-location: ${{ needs.build.outputs.chart-location }}
+          version: ${{ needs.build.outputs.chart-version }}
+          release-name: ${{ env.UNIQUE_PREFIX }}-${{ env.APP_NAME }}
+          namespace: ${{ env.UNIQUE_PREFIX }}-${{ env.APP_NAME }}
+          values: |
+            ingress:
+              annotations:
+                external-dns.alpha.kubernetes.io/hostname: ${{ env.HOSTNAME }}
+              hosts:
+                - host: "${{ env.HOSTNAME }}"
+                  paths:
+                    - path: /
+                      pathType: Prefix
+                - paths:
+                    - path: /
+                      pathType: Prefix
     needs:
       - build
