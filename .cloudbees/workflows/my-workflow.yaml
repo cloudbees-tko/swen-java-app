@@ -51,7 +51,7 @@ jobs:
           chart: ./charts/myapp
           version: 0.0.1
           destination: ./packaged-charts
-          values: |
+          values: >
             image:
               repository: ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/${{ env.APP_NAME }}-image
               tag: ${{ steps.image-publish.outputs.tag }}
@@ -60,4 +60,18 @@ jobs:
         uses: cloudbees-io/helm-push@v1
         with:
           chart: ${{ steps.helmpkg.outputs.chart }}
-          remote: oci://${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com
+          remote: oci://${{ steps.aws-login.outputs.aws-account-id
+            }}.dkr.ecr.us-east-1.amazonaws.com
+  Deploy:
+    steps:
+      - uses: cloudbees-io/configure-aws-credentials@v1
+        name: Login AWS
+        id: aws-login
+        with:
+          aws-access-key-id: ${{ vars.aws_access_key_id}}
+          aws-secret-access-key: ${{ secrets.aws_secret_access_key }}
+          aws-region: us-east-1
+          role-to-assume: cloudbees-infra-mgmt
+          role-duration-seconds: "3600"
+    needs:
+      - build
