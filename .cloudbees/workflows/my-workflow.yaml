@@ -41,3 +41,4 @@ jobs:
           destination: ${{ steps.aws-login.outputs.aws-account-id
             }}.dkr.ecr.us-east-1.amazonaws.com/${{ env.APP_NAME }}-image:${{
             env.UNIQUE_PREFIX }}-${{ cloudbees.version }}
+          labels: maintainer=swen,version=1.0.1
