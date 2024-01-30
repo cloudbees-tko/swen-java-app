@@ -50,4 +50,7 @@ jobs:
           chart: ./charts/myapp
           version: 0.0.1
           destination: ./packaged-charts
-          values: "image:"
+          values: |
+            image:
+              repository: ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/${{ env.APP_NAME }}-image
+              tag: ${{ steps.image-publish.outputs.tag }}
