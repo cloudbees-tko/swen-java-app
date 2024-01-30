@@ -46,6 +46,7 @@ jobs:
           labels: maintainer=swen,version=1.0.1
       - uses: cloudbees-io/helm-package@v1
         name: Build and publish a helm chart
+        id: helmpkg
         with:
           chart: ./charts/myapp
           version: 0.0.1
@@ -54,3 +55,9 @@ jobs:
             image:
               repository: ${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com/${{ env.APP_NAME }}-image
               tag: ${{ steps.image-publish.outputs.tag }}
+      - name: Publish Helm chart
+        id: helm-publish
+        uses: cloudbees-io/helm-push@v1
+        with:
+          chart: ${{ steps.helmpkg.outputs.chart }}
+          remote: oci://${{ steps.aws-login.outputs.aws-account-id }}.dkr.ecr.us-east-1.amazonaws.com
