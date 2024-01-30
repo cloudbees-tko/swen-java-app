@@ -78,7 +78,7 @@ jobs:
           role-to-assume: cloudbees-infra-mgmt
           role-duration-seconds: "3600"
       - uses: cloudbees-io/configure-eks-credentials@v1
-        name: configure eks credential
+        name: cloudbees-quickstart-cluster
       - uses: cloudbees-io/helm-install@v1
         name: Helm Install
         with:
