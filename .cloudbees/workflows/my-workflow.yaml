@@ -24,7 +24,7 @@ jobs:
         name: aws-login
         id: aws-login
         with:
-          aws-access-key-id: ${{ vars.aws_access_key_id}}
+          aws-access-key-id: ${{ vars.aws_access_key_id }}
           aws-secret-access-key: ${{ secrets.aws_secret_access_key }}
           aws-region: us-east-1
           role-to-assume: cloudbees-infra-mgmt
