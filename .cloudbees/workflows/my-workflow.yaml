@@ -44,3 +44,10 @@ jobs:
             }}.dkr.ecr.us-east-1.amazonaws.com/${{ env.APP_NAME }}-image:${{
             env.UNIQUE_PREFIX }}-${{ cloudbees.version }}
           labels: maintainer=swen,version=1.0.1
+      - uses: cloudbees-io/helm-package@v1
+        name: Build and publish a helm chart
+        with:
+          chart: ./charts/myapp
+          version: 0.0.1
+          destination: ./packaged-charts
+          values: "image:"
