@@ -14,4 +14,6 @@ jobs:
         name: Build
         kind: build
         shell: sh
-        run: mvn clean install
+        run: |-
+          #run mvn command
+          mvn clean install
