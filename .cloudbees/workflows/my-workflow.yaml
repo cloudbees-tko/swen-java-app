@@ -35,6 +35,7 @@ jobs:
         shell: sh
       - uses: cloudbees-io/configure-ecr-credentials@v1
         name: auth for ECR
+        id: login-ecr
       - uses: cloudbees-io/kaniko@v1
         name: build docker img and push to ECR
         id: image-publish
