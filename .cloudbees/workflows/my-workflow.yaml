@@ -84,6 +84,7 @@ jobs:
         name: cloudbees-quickstart-cluster
       - uses: cloudbees-io/helm-install@v1
         name: Helm Install
+        kind: deploy
         with:
           chart-location: ${{ needs.build.outputs.chart-location }}
           version: ${{ needs.build.outputs.chart-version }}
