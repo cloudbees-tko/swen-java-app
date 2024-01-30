@@ -83,7 +83,7 @@ jobs:
         name: login ecr
         id: login-ecr
       - uses: cloudbees-io/helm-install@v1
-        name: Helm Install
+        name: helm install
         kind: deploy
         with:
           chart-location: ${{ needs.build.outputs.chart-location }}
