@@ -69,7 +69,7 @@ jobs:
   deploy:
     steps:
       - uses: cloudbees-io/configure-aws-credentials@v1
-        name: Login AWS
+        name: aws login
         id: aws-login
         with:
           aws-access-key-id: ${{ vars.aws_access_key_id }}
