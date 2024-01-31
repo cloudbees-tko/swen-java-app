@@ -21,15 +21,8 @@ jobs:
         run: |-
           #run mvn command
           mvn clean install
-      - uses: cloudbees-io/configure-aws-credentials@v1
-        name: aws-login
-        id: aws-login
-        with:
-          aws-access-key-id: ${{ vars.aws_access_key_id }}
-          aws-secret-access-key: ${{ secrets.aws_secret_access_key }}
-          aws-region: us-east-1
-          role-to-assume: cloudbees-infra-mgmt
-          role-duration-seconds: "3600"
+      
+      - uses: tko-configure-aws-credentials
       - uses: docker://public.ecr.aws/aws-cli/aws-cli
         name: aws get call id
         run: aws sts get-caller-identity
@@ -69,13 +62,7 @@ jobs:
   deploy:
     environment: dev
     steps:
-      - uses: cloudbees-io/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ vars.aws_access_key_id }}
-          aws-secret-access-key: ${{ secrets.aws_secret_access_key }}
-          aws-region: us-east-1
-          role-to-assume: cloudbees-infra-mgmt
-          role-duration-seconds: "3600"
+      - uses: tko-configure-aws-credentials
       - uses: cloudbees-io/configure-eks-credentials@v1
         with:
           name: cloudbees-quickstart-cluster
