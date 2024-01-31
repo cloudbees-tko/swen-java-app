@@ -23,6 +23,7 @@ jobs:
           mvn clean install
       
       - uses: tko-configure-aws-credentials
+        id: aws-login
       - uses: docker://public.ecr.aws/aws-cli/aws-cli
         name: aws get call id
         run: aws sts get-caller-identity
@@ -63,6 +64,7 @@ jobs:
     environment: dev
     steps:
       - uses: tko-configure-aws-credentials
+        id: aws-login
       - uses: cloudbees-io/configure-eks-credentials@v1
         with:
           name: cloudbees-quickstart-cluster
