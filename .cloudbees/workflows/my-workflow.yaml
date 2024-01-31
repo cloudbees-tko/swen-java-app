@@ -23,6 +23,7 @@ jobs:
           mvn clean install
       - uses: cloudbees-io/sonarqube-bundled-sast-scan-code@v1
         name: sonar scan
+        kind: scan
         with:
           language: JAVA
           run-unit-test: "false"
