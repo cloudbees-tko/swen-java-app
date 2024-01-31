@@ -93,9 +93,9 @@ jobs:
           values: |
             ingress:
               annotations:
-                external-dns.alpha.kubernetes.io/hostname: ${{ env.HOSTNAME }}
+                external-dns.alpha.kubernetes.io/hostname: ${{ vars.HOSTNAME }}
               hosts:
-                - host: "${{ env.HOSTNAME }}"
+                - host: "${{ vars.HOSTNAME }}"
                   paths:
                     - path: /
                       pathType: Prefix
