@@ -21,7 +21,6 @@ jobs:
         run: |-
           #run mvn command
           mvn clean install
-      
       - uses: tko-configure-aws-credentials
         id: aws-login
       - uses: docker://public.ecr.aws/aws-cli/aws-cli
@@ -93,3 +92,7 @@ jobs:
                       pathType: Prefix
     needs:
       - build
+  parallel_test_job:
+    steps:
+      - uses: docker://golang:1.20.3-alpine3.17
+        run: echo Test
