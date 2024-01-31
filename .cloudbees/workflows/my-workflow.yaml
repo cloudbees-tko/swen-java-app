@@ -67,6 +67,7 @@ jobs:
       chart-location: ${{ steps.helm-publish.outputs.chart }}
       chart-version: ${{ steps.helm-publish.outputs.version }}
   deploy:
+    environment: dev
     steps:
       - uses: cloudbees-io/configure-aws-credentials@v1
         with:
@@ -103,4 +104,3 @@ jobs:
                       pathType: Prefix
     needs:
       - build
-
