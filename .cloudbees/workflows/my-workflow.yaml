@@ -23,10 +23,6 @@ jobs:
           mvn clean install
       - uses: cloudbees-io/sonarqube-bundled-sast-scan-code@v1
         name: sonar scan
-        kind: scan
-        with:
-          language: JAVA
-          run-unit-test: "true"
       - uses: tko-configure-aws-credentials
         id: aws-login
       - uses: docker://public.ecr.aws/aws-cli/aws-cli
